@@ -13,7 +13,7 @@ load_dotenv(project_root / ".env")
 
 data_path = project_root / "data" / "raw" / "dynamic_supply_chain_logistics_dataset.csv"
 
-db_host = os.getenv("SQL_SERVER_HOST", "localhost")
+db_host = os.getenv("SQL_SERVER_HOST", "127.0.0.1")
 db_port = os.getenv("SQL_SERVER_PORT", "1433")
 db_user = os.getenv("SQL_ADMIN_USER")
 db_password = os.getenv("SQL_ADMIN_PASSWORD")
@@ -50,8 +50,9 @@ connection_string = (
         f"DATABASE=master;"
         f"UID={db_user};"
         f"PWD={db_password};"
-        f"Encrypt=no;"
+        f"Encrypt=yes;"
         f"TrustServerCertificate=yes;"
+        f"Timeout=30;"                  # Prevents script from hanging indefinitely
     )
 
 params = urllib.parse.quote_plus(connection_string)
